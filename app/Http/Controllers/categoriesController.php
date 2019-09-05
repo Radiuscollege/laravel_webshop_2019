@@ -35,18 +35,33 @@ class categoriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        \DB::table('categories')
+            ->insert([
+                'name'          => $request->name,
+                'description'   => $request->description
+            ]);
+
+        return redirect()->route('categories.index');
     }
 
     /**
      * Display the specified resource.
      *
+     * 
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        // 1. id ophalen ($id) 
+        // 2. 1 categorie selecteren uit database
+        // 3. show template returnen met opgehaalde data
+
+        $category = \DB::table('categories')
+                        ->where('id', $id)
+                        ->first();              
+        
+        return view('categories/show', ['category' => $category] );
     }
 
     /**
