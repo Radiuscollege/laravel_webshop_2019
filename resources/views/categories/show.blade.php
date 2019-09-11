@@ -7,10 +7,11 @@
     <title>Document</title>
 </head>
 <body>
-    Dit wordt de detail page
+    Dit is de detail page
     
     <h1> {{ $category->name }} </h1>
     <p> {{ $category->description }} </p>
     
+    <a href="{{ route('categories.edit', $category->id) }}">EDIT</a>
 </body>
 </html>

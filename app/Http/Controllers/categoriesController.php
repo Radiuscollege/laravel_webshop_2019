@@ -72,7 +72,11 @@ class categoriesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = \DB::table('categories')
+                        ->where('id', $id)
+                        ->first();
+        
+        return view('categories.edit', ['category' => $category]);
     }
 
     /**
@@ -84,7 +88,16 @@ class categoriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // 1. ingekomen aanpassingen aanpassen op de juiste plaats
+        // 2. redirecten naar show of index 
+        \DB::table('categories')
+            ->where('id', $id)
+            ->update([
+                'name' => $request->name,
+                'description' => $request->description
+            ]);
+
+        return redirect()->route('categories.show', $id);
     }
 
     /**
