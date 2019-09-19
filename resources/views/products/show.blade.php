@@ -1,16 +1,19 @@
 @extends('app')
 
   @section('content')
-    Dit is de detail page
-    
-    <h1> {{ $product->naam }} </h1>
-    <p> {{ $product->prijs }} </p>
+    <div class="card">
+      <div class="card-body">
+        <h1 class="card-title"> {{ $product->naam }} </h1>
+        <p class="card-text"> {{ $product->prijs }} </p>
+            
+        <a class="btn btn-primary" href="{{ route('products.edit', $product->id) }}">EDIT</a>
         
-    <a href="{{ route('products.edit', $product->id) }}">EDIT</a>
-    <form method="POST" action="{{ route('products.destroy', $product->id) }}">
-      @csrf
-      @method('DELETE')
+        <form method="POST" action="{{ route('products.destroy', $product->id) }}">
+          @csrf
+          @method('DELETE')
 
-      <input type="submit" value="DELETE">
-    </form>
+          <input class="btn btn-warning" type="submit" value="DELETE">
+        </form>
+      </div>
+    </div>
   @endsection

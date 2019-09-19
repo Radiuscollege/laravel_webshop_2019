@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use \App\Product;
 use Illuminate\Http\Request;
 
 class productsController extends Controller
@@ -13,7 +13,7 @@ class productsController extends Controller
      */
     public function index()
     {
-        $products = \DB::select('SELECT * FROM products');
+        $products = Product::all();
         return view('products/index', ['products' => $products]);
     }
 
@@ -39,12 +39,12 @@ class productsController extends Controller
      */
     public function store(Request $request)
     {
-        \DB::table('products')
-            ->insert([
-                'naam'          => $request->name,
-                'prijs'         => $request->price,
-                'categories_id'  => $request->categorie_id
-            ]);
+        
+        Product::insert([
+            'naam'           => $request->name,
+            'prijs'          => $request->price,
+            'categories_id'  => $request->categorie_id
+        ]);
 
         return redirect()->route('products.index');
     }
@@ -61,10 +61,15 @@ class productsController extends Controller
         // 1. id ophalen ($id) 
         // 2. 1 categorie selecteren uit database
         // 3. show template returnen met opgehaalde data
-
+        
+        // oud
         $product = \DB::table('products')
                         ->where('id', $id)
-                        ->first();              
+                        ->first();
+        
+        // nieuw met model
+        $product = Product::find($id);
+                        
         
         return view('products/show', ['product' => $product] );
     }
@@ -120,9 +125,7 @@ class productsController extends Controller
      */
     public function destroy($id)
     {
-        \DB::table('products')
-            ->where('id', $id)
-            ->delete();
+        Product::destroy($id);
         
         return redirect()->route('products.index');
     }
