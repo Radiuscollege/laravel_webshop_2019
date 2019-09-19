@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use \App\Category;
 
 use Illuminate\Http\Request;
 
@@ -13,7 +14,7 @@ class categoriesController extends Controller
      */
     public function index()
     {
-        $categories = \DB::select('SELECT * FROM categories');
+        $categories = Category::all();
         return view('categories/index', ['categories' => $categories]);
     }
 
@@ -35,11 +36,11 @@ class categoriesController extends Controller
      */
     public function store(Request $request)
     {
-        \DB::table('categories')
-            ->insert([
-                'name'          => $request->name,
-                'description'   => $request->description
-            ]);
+   
+        Category::insert([
+            'name' => $request->name,
+            'description' => $request->description
+        ]);
 
         return redirect()->route('categories.index');
     }
@@ -57,9 +58,7 @@ class categoriesController extends Controller
         // 2. 1 categorie selecteren uit database
         // 3. show template returnen met opgehaalde data
 
-        $category = \DB::table('categories')
-                        ->where('id', $id)
-                        ->first();              
+        $category = Category::find($id);           
         
         return view('categories/show', ['category' => $category] );
     }
@@ -72,9 +71,7 @@ class categoriesController extends Controller
      */
     public function edit($id)
     {
-        $category = \DB::table('categories')
-                        ->where('id', $id)
-                        ->first();
+        $category = Category::find($id);
         
         return view('categories.edit', ['category' => $category]);
     }
@@ -90,12 +87,11 @@ class categoriesController extends Controller
     {
         // 1. ingekomen aanpassingen aanpassen op de juiste plaats
         // 2. redirecten naar show of index 
-        \DB::table('categories')
-            ->where('id', $id)
-            ->update([
-                'name' => $request->name,
-                'description' => $request->description
-            ]);
+        $category = Category::find($id);
+        $category->update([
+            'name' => $request->name,
+            'description' => $request->description
+        ]);
 
         return redirect()->route('categories.show', $id);
     }
@@ -108,9 +104,7 @@ class categoriesController extends Controller
      */
     public function destroy($id)
     {
-        \DB::table('categories')
-            ->where('id', $id)
-            ->delete();
+        Category::destroy($id);
         
         return redirect()->route('categories.index');
     }

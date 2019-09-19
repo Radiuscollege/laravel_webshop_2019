@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use \App\Product;
+use \App\Category;
 use Illuminate\Http\Request;
 
 class productsController extends Controller
@@ -25,9 +26,7 @@ class productsController extends Controller
     public function create()
     {
         
-        $categories = \DB::table('categories')
-                        ->get();
-
+        $categories = Category::all();
         return view('products/create', ['categories'=>$categories]);
     }
 
@@ -62,15 +61,8 @@ class productsController extends Controller
         // 2. 1 categorie selecteren uit database
         // 3. show template returnen met opgehaalde data
         
-        // oud
-        $product = \DB::table('products')
-                        ->where('id', $id)
-                        ->first();
-        
         // nieuw met model
-        $product = Product::find($id);
-                        
-        
+        $product = Product::find($id);       
         return view('products/show', ['product' => $product] );
     }
 
@@ -82,12 +74,9 @@ class productsController extends Controller
      */
     public function edit($id)
     {
-        $product = \DB::table('products')
-                        ->where('id', $id)
-                        ->first();
+        $product = Product::find($id);
 
-        $categories = \DB::table('categories')
-                        ->get();
+        $categories = Category::all();
         
         return view('products.edit', [
             'product' => $product,
@@ -106,13 +95,13 @@ class productsController extends Controller
     {
         // 1. ingekomen aanpassingen aanpassen op de juiste plaats
         // 2. redirecten naar show of index 
-        \DB::table('products')
-            ->where('id', $id)
-            ->update([
-                'naam'          => $request->name,
-                'prijs'         => $request->price,
-                'categories_id'  => $request->categorie_id
-            ]);
+        $product = Product::find($id);
+
+        $product->update([
+            'naam' => $request->name,
+            'prijs' => $request->price,
+            'categories_id' => $request->categorie_id
+        ]);
 
         return redirect()->route('products.show', $id);
     }
