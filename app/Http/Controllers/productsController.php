@@ -38,13 +38,16 @@ class productsController extends Controller
      */
     public function store(Request $request)
     {
-        
+
+        $fileName = $request->image->getClientOriginalName();
         Product::insert([
             'naam'           => $request->name,
             'prijs'          => $request->price,
+            'image_path'     => $fileName,
             'categories_id'  => $request->categorie_id
         ]);
 
+        $request->image->storeAs('public/images', $fileName);
         return redirect()->route('products.index');
     }
 

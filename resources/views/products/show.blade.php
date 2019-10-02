@@ -3,6 +3,7 @@
   @section('content')
     <div class="card">
       <div class="card-body">
+          <img width="200px" src="{{asset('storage/images/' . $product->image_path)}}" alt="">
         <h1 class="card-title"> {{ $product->naam }} </h1>
         <p class="card-text"> {{ $product->prijs }} </p>
         <p>Categorie: <a style="color: black" href="{{route('categories.show', $product->category->id)}}">{{ $product->category->name  }}</a></p>
