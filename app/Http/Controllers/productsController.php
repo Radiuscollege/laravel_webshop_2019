@@ -38,15 +38,13 @@ class productsController extends Controller
      */
     public function store(Request $request)
     {
-        // EERST FF CONTROLEREN NATUURLIJK!!
+
         $this->validate($request, [
             'name'          => 'required|max:50',
             'price'         => 'required|numeric',
             'image'         => 'image',
             'categorie_id'  => 'required|exists:categories,id'
         ]);
-
-
 
         $fileName = $request->image->getClientOriginalName();
         Product::insert([
