@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class categoriesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index', 'show']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -36,7 +40,7 @@ class categoriesController extends Controller
      */
     public function store(Request $request)
     {
-   
+
         Category::insert([
             'name' => $request->name,
             'description' => $request->description

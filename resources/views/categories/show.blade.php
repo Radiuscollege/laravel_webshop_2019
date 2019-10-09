@@ -11,12 +11,16 @@
             <li class="list-group-item list-group-item-dark"><a href="{{ route('products.show', $product->id)  }}">{{ $product->name }}</a></li>
         @endforeach
     </ul>
-    <a href="{{ route('categories.edit', $category->id) }}">EDIT</a>
-    <form method="POST" action="{{ route('categories.destroy', $category->id) }}">
-      @csrf
-      @method('DELETE')
 
-      <input type="submit" value="DELETE">
-    </form>
+    @auth
+        <a href="{{ route('categories.edit', $category->id) }}">EDIT</a>
+
+        <form method="POST" action="{{ route('categories.destroy', $category->id) }}">
+          @csrf
+          @method('DELETE')
+
+          <input type="submit" value="DELETE">
+        </form>
+    @endauth
 
   @endsection
