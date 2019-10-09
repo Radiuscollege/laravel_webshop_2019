@@ -6,22 +6,26 @@
         @csrf
         <div class="form-group">
             <label for="">name</label>
-            <input name="name" type="text" value="{{$product->naam}}">
+            <input name="name" type="text" value="{{$product->name}}">
         </div>
 
         <div class="form-group">
             <label for="">price</label>
-            <input type="text" name="price" value="{{ $product->prijs }}" id=""> 
+            <input type="text" name="price" value="{{ $product->price }}" id="">
        </div>
 
         <div class="form-group">
             <label for="">categorie</label>
             <select name="categorie_id" id="">
                 @foreach($categories as $category)
-                    <option value="{{$category->id}}"> {{ $category->name }}</option>
+                    <option
+                        @if ($product->category->id == $category->id) selected @endif
+                        value="{{$category->id}}">
+                            {{ $category->name }}
+                    </option>
                 @endforeach
             </select>
        </div>
-        <input type="submit" value="Edit category">
+        <input type="submit" value="Edit Product">
     </form>
     @endsection

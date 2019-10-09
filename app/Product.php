@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $fillable = ['naam', 'prijs', 'categorie_id'];
+    protected $fillable = ['name', 'price', 'categories_id'];
 
     // hasOne
     // hasMany

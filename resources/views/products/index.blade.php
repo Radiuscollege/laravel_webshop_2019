@@ -3,7 +3,7 @@
 @section('content')
   <ul>
   @foreach($products as $product)
-    <li> <a href="{{ route('products.show', $product->id ) }}"> {{ $product->naam }}  </a>   </li>
+    <li> <a href="{{ route('products.show', $product->id ) }}"> {{ $product->name }}  </a>   </li>
   @endforeach
   </ul>
 

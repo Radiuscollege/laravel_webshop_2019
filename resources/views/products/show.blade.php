@@ -3,9 +3,9 @@
   @section('content')
     <div class="card">
       <div class="card-body">
-          <img width="200px" src="{{asset('storage/images/' . $product->image_path)}}" alt="">
-        <h1 class="card-title"> {{ $product->naam }} </h1>
-        <p class="card-text"> {{ $product->prijs }} </p>
+          <img width="200px" src="@if($product->image_path){{asset('storage/images/' . $product->image_path)}} @else http://placehold.it/200x200 @endif" alt="">
+        <h1 class="card-title"> {{ $product->name }} </h1>
+        <p class="card-text"> {{ $product->price }} </p>
         <p>Categorie: <a style="color: black" href="{{route('categories.show', $product->category->id)}}">{{ $product->category->name  }}</a></p>
         <a class="btn btn-primary" href="{{ route('products.edit', $product->id) }}">EDIT</a>
 

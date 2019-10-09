@@ -45,16 +45,25 @@ class productsController extends Controller
             'image'         => 'image',
             'categorie_id'  => 'required|exists:categories,id'
         ]);
+        // If I have image
+        if ($request->image) {
+            $fileName = $request->image->getClientOriginalName();
+            Product::insert([
+                'name'           => $request->name,
+                'price'          => $request->price,
+                'image_path'     => $fileName,
+                'categories_id'  => $request->categorie_id
+            ]);
 
-        $fileName = $request->image->getClientOriginalName();
-        Product::insert([
-            'naam'           => $request->name,
-            'prijs'          => $request->price,
-            'image_path'     => $fileName,
-            'categories_id'  => $request->categorie_id
-        ]);
-
-        $request->image->storeAs('public/images', $fileName);
+            $request->image->storeAs('public/images', $fileName);
+        // If I don't have image
+        } else {
+            Product::insert([
+                'name'           => $request->name,
+                'price'          => $request->price,
+                'categories_id'  => $request->categorie_id
+            ]);
+        }
         return redirect()->route('products.index');
     }
 
@@ -108,8 +117,8 @@ class productsController extends Controller
         $product = Product::find($id);
 
         $product->update([
-            'naam' => $request->name,
-            'prijs' => $request->price,
+            'name' => $request->name,
+            'price' => $request->price,
             'categories_id' => $request->categorie_id
         ]);
 

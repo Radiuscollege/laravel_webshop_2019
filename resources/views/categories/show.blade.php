@@ -8,7 +8,7 @@
     <h4>Producten</h4>
     <ul class="list-group">
         @foreach( $category->products as $product )
-            <li class="list-group-item list-group-item-dark"><a href="{{ route('products.show', $product->id)  }}">{{ $product->naam }}</a></li>
+            <li class="list-group-item list-group-item-dark"><a href="{{ route('products.show', $product->id)  }}">{{ $product->name }}</a></li>
         @endforeach
     </ul>
     <a href="{{ route('categories.edit', $category->id) }}">EDIT</a>
