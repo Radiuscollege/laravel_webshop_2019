@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('products', 'productsController');
+Route::resource('products', 'productsController')->middleware('auth');
 Route::resource('categories', 'categoriesController');
 Auth::routes();
 
