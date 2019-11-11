@@ -70,6 +70,9 @@ class productsController extends Controller
                 'categories_id'  => $request->categorie_id
             ]);
         }
+        // mijn testmail versturen
+
+
         return redirect()->route('products.index');
     }
 
@@ -87,7 +90,7 @@ class productsController extends Controller
         // 3. show template returnen met opgehaalde data
         
         // nieuw met model
-        $product = Product::find($id);       
+        $product = Product::find($id);
         return view('products/show', ['product' => $product] );
     }
 
