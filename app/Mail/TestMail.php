@@ -16,9 +16,9 @@ class TestMail extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($productName)
     {
-        //
+        $this->productName = $productName;
     }
 
     /**
@@ -28,6 +28,6 @@ class TestMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.test');
+        return $this->markdown('emails.test')->with('name', $this->productName);
     }
 }

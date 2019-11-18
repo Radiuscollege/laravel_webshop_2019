@@ -13,9 +13,15 @@
           <form method="POST" action="{{ route('products.destroy', $product->id) }}">
           @csrf
           @method('DELETE')
-
           <input class="btn btn-warning" type="submit" value="DELETE">
-        </form>
+          </form>
+
+          <form action="{{route('orders.store')}}" method="post">
+              @csrf
+              <input type="hidden" name="product_id" value="{{$product->id}}" >
+              <input type="submit" value="Kopuh" class="btn btn-info">
+          </form>
+
       </div>
     </div>
   @endsection

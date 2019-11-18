@@ -1,10 +1,10 @@
 @component('mail::message')
-# Introduction
+# Barroc Intens
 
-The body of your message.
+U heeft een product aangemaakt met de naam {{$name}}
 
 @component('mail::button', ['url' => ''])
-Klik, gebeurt toch niks....
+Klik om akkoord te gaan met deze offerte
 @endcomponent
 
 Thanks,<br>

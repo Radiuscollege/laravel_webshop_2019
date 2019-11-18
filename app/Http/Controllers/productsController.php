@@ -19,7 +19,7 @@ class productsController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        $products = Product::paginate(15);
         return view('products/index', ['products' => $products]);
     }
 
@@ -70,9 +70,9 @@ class productsController extends Controller
                 'categories_id'  => $request->categorie_id
             ]);
         }
-        // mijn testmail versturen
 
-
+//        \Mail::to( \Auth::user() )->send( new \App\Mail\TestMail($request->name) );
+        return ( new \App\Mail\TestMail($request->name) )->render();
         return redirect()->route('products.index');
     }
 
@@ -83,14 +83,12 @@ class productsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(\App\Product $product)
     {
         // 1. id ophalen ($id) 
         // 2. 1 categorie selecteren uit database
         // 3. show template returnen met opgehaalde data
-        
-        // nieuw met model
-        $product = Product::find($id);
+
         return view('products/show', ['product' => $product] );
     }
 
@@ -100,10 +98,8 @@ class productsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(\App\Product $product)
     {
-        $product = Product::find($id);
-
         $categories = Category::all();
         
         return view('products.edit', [
@@ -140,10 +136,9 @@ class productsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(App\Product $product)
     {
-        Product::destroy($id);
-        
+        $product->delete();
         return redirect()->route('products.index');
     }
 }
